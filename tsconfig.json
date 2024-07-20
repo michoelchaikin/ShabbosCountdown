@@ -13,6 +13,5 @@
 		"typeRoots": ["./node_modules/@types", "./src"],
 		"types": ["svelte", "jcal-zmanim"]
 	},
-	"include": ["src/**/*.d.ts", "src/**/*.ts", "src/**/*.js", "src/**/*.svelte"],
-	"references": [{ "path": "./tsconfig.node.json" }]
+	"include": ["src/**/*.d.ts", "src/**/*.ts", "src/**/*.js", "src/**/*.svelte"]
 }

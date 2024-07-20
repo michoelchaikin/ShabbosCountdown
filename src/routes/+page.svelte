@@ -3,18 +3,28 @@
   import { jDate, findLocation, Utils } from 'jcal-zmanim';
 
   let jewishDate = '';
-  let sunset = '';
+  let nextParsha = '';
+  let candleLighting = '';
 
   onMount(() => {
     const today = jDate.now();
     jewishDate = today.toString();
 
     const jerusalem = findLocation('Jerusalem');
-    const { sunset: sunsetTime } = today.getSunriseSunset(jerusalem);
-    sunset = Utils.getTimeString(sunsetTime);
+    
+    // Find the next Friday
+    let nextFriday = today;
+    while (nextFriday.getDayOfWeek() !== 6) {
+      nextFriday = nextFriday.addDays(1);
+    }
+
+    nextParsha = Utils.getParsha(nextFriday);
+    const candleLightingTime = Utils.getCandleLighting(nextFriday, jerusalem);
+    candleLighting = Utils.getTimeString(candleLightingTime);
   });
 </script>
 
 <h1>Shabbos Countdown</h1>
 <p>Today's Hebrew Date: {jewishDate}</p>
-<p>Sunset in Jerusalem: {sunset}</p>
+<p>Next Parsha: {nextParsha}</p>
+<p>Candle Lighting in Jerusalem: {candleLighting}</p>

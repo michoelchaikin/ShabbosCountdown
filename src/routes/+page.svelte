@@ -3,7 +3,7 @@
   import { jDate, findLocation, Utils } from 'jcal-zmanim';
 
   let jewishDate = '';
-  let nextParsha = '';
+  let nextSedra = '';
   let candleLighting = '';
 
   onMount(() => {
@@ -14,11 +14,11 @@
     
     // Find the next Friday
     let nextFriday = today;
-    while (nextFriday.getDayOfWeek() !== 6) {
+    while (nextFriday.DayOfWeek !== 6) {
       nextFriday = nextFriday.addDays(1);
     }
 
-    nextParsha = Utils.getParsha(nextFriday);
+    nextSedra = nextFriday.getSedra(true).toString();
     const candleLightingTime = Utils.getCandleLighting(nextFriday, jerusalem);
     candleLighting = Utils.getTimeString(candleLightingTime);
   });
@@ -26,5 +26,5 @@
 
 <h1>Shabbos Countdown</h1>
 <p>Today's Hebrew Date: {jewishDate}</p>
-<p>Next Parsha: {nextParsha}</p>
+<p>Next Sedra: {nextSedra}</p>
 <p>Candle Lighting in Jerusalem: {candleLighting}</p>

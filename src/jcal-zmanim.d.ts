@@ -10,7 +10,8 @@ declare module 'jcal-zmanim' {
 
   export class Utils {
     static getTimeString(date: Date): string;
-    static getParsha(date: jDate): string;
     static getCandleLighting(date: jDate, location: any): Date;
   }
+
+  export function getParsha(date: jDate): string;
 }

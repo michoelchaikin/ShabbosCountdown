@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { jDate, findLocation, Utils, getParsha } from 'jcal-zmanim';
+  import { jDate, findLocation, Utils } from 'jcal-zmanim';
 
   let jewishDate = '';
   let nextParsha = '';
@@ -18,7 +18,7 @@
       nextFriday = nextFriday.addDays(1);
     }
 
-    nextParsha = getParsha(nextFriday);
+    nextParsha = Utils.getParsha(nextFriday);
     const candleLightingTime = Utils.getCandleLighting(nextFriday, jerusalem);
     candleLighting = Utils.getTimeString(candleLightingTime);
   });

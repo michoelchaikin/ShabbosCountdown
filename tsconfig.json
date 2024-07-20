@@ -11,7 +11,7 @@
 		"strict": true,
 		"moduleResolution": "bundler",
 		"typeRoots": ["./node_modules/@types", "./src"],
-		"types": ["svelte", "jcal-zmanim"]
+		"types": ["jcal-zmanim"]
 	},
 	"include": ["src/**/*.d.ts", "src/**/*.ts", "src/**/*.js", "src/**/*.svelte"]
 }

@@ -1,6 +1,10 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { jDate, findLocation, Utils } from 'jcal-zmanim';
+  import Icon from '@iconify/svelte';
+  import bookOpenPageVariant from '@iconify-icons/mdi/book-open-page-variant';
+  import candle from '@iconify-icons/mdi/candle';
+  import mapMarker from '@iconify-icons/mdi/map-marker';
 
   let nextSedra = '';
   let candleLighting = '';
@@ -75,9 +79,9 @@
 <main>
   <div class="container">
     <div class="info">
-      <p class="info-item"><span class="emoji">📖</span> <span class="info-text">{nextSedra}</span></p>
-      <p class="info-item"><span class="emoji">🕯️</span> <span class="info-text">{candleLighting}</span></p>
-      <p class="info-item"><span class="emoji">📍</span> <span class="info-text">Melbourne</span></p>
+      <p class="info-item"><Icon icon={bookOpenPageVariant} /> <span class="info-text">{nextSedra}</span></p>
+      <p class="info-item"><Icon icon={candle} /> <span class="info-text">{candleLighting}</span></p>
+      <p class="info-item"><Icon icon={mapMarker} /> <span class="info-text">Melbourne</span></p>
     </div>
     <div class="countdown">
       {#each [{value: days, label: 'Days'}, {value: hours, label: 'Hours'}, {value: minutes, label: 'Minutes'}, {value: seconds, label: 'Seconds'}] as unit}
@@ -122,9 +126,10 @@
     margin: 15px 0;
   }
 
-  .emoji {
+  :global(.iconify) {
     font-size: 1.5em;
     margin-right: 10px;
+    color: #1a237e;
   }
 
   .info-text {

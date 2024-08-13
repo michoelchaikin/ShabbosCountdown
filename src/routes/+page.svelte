@@ -129,7 +129,7 @@
   :global(.iconify) {
     font-size: 1.5em;
     margin-right: 10px;
-    color: #1a237e;
+    color: #1a237e !important;
   }
 
   .info-text {

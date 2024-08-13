@@ -136,7 +136,7 @@
   .info {
     display: flex;
     justify-content: space-around;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     flex-wrap: wrap;
   }
 
@@ -144,7 +144,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 15px;
+    padding: 10px;
     transition: transform 0.3s ease;
   }
 
@@ -156,13 +156,13 @@
     font-weight: 500;
     color: #1a237e;
     text-align: center;
-    margin-top: 15px;
+    margin-top: 10px;
   }
 
   .countdown {
     display: flex;
     justify-content: space-between;
-    margin-top: 30px;
+    margin-top: 20px;
     flex-wrap: nowrap;
     overflow-x: auto;
     padding-bottom: 10px;

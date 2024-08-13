@@ -73,7 +73,6 @@
 </script>
 
 <main>
-  <h1>Shabbos Countdown</h1>
   <div class="info">
     <p>📖 <span>{nextSedra}</span></p>
     <p>🕯️ <span>{candleLighting}</span></p>
@@ -109,11 +108,6 @@
     color: #333;
   }
 
-  h1 {
-    font-size: 2.5em;
-    margin-bottom: 20px;
-    color: #1a237e;
-  }
 
   .info {
     margin-bottom: 30px;

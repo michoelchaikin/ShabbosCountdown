@@ -5,8 +5,9 @@
   let nextSedra = '';
   let candleLighting = '';
   let timeRemaining = '';
+  let days = 0, hours = 0, minutes = 0, seconds = 0;
 
-  function calculateTimeRemaining(targetDate: Date): string {
+  function calculateTimeRemaining(targetDate: Date): void {
     const now = new Date();
     const difference = targetDate.getTime() - now.getTime();
 
@@ -26,7 +27,10 @@
     const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-    return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    days = Math.floor(difference / (1000 * 60 * 60 * 24));
+    hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+    seconds = Math.floor((difference % (1000 * 60)) / 1000);
   }
 
   onMount(() => {
@@ -60,7 +64,7 @@
 
     // Set up countdown timer
     const updateCountdown = () => {
-      timeRemaining = calculateTimeRemaining(candleLightingDate);
+      calculateTimeRemaining(candleLightingDate);
     };
 
     updateCountdown(); // Initial call
@@ -72,7 +76,82 @@
   });
 </script>
 
-<h1>Shabbos Countdown</h1>
-<p>Next Sedra: {nextSedra}</p>
-<p>Candle Lighting in Melbourne: {candleLighting}</p>
-<p>Time until Shabbos: {timeRemaining}</p>
+<main>
+  <h1>Shabbos Countdown</h1>
+  <div class="info">
+    <p>Next Sedra: <span>{nextSedra}</span></p>
+    <p>Candle Lighting in Melbourne: <span>{candleLighting}</span></p>
+  </div>
+  <div class="countdown">
+    <div class="time-unit">
+      <span class="number">{days}</span>
+      <span class="label">Days</span>
+    </div>
+    <div class="time-unit">
+      <span class="number">{hours}</span>
+      <span class="label">Hours</span>
+    </div>
+    <div class="time-unit">
+      <span class="number">{minutes}</span>
+      <span class="label">Minutes</span>
+    </div>
+    <div class="time-unit">
+      <span class="number">{seconds}</span>
+      <span class="label">Seconds</span>
+    </div>
+  </div>
+</main>
+
+<style>
+  main {
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    color: #333;
+  }
+
+  h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #1a237e;
+  }
+
+  .info {
+    margin-bottom: 30px;
+  }
+
+  .info p {
+    margin: 10px 0;
+  }
+
+  .info span {
+    font-weight: bold;
+    color: #1a237e;
+  }
+
+  .countdown {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+  }
+
+  .time-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .number {
+    font-size: 3em;
+    font-weight: bold;
+    color: #1a237e;
+  }
+
+  .label {
+    font-size: 0.9em;
+    text-transform: uppercase;
+    margin-top: 5px;
+  }
+</style>

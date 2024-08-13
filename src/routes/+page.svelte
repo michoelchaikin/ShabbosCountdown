@@ -132,6 +132,10 @@
     color: #1a237e;
   }
 
+  :global(.info-item .iconify) {
+    color: #1a237e;
+  }
+
   .info-text {
     font-weight: 500;
     color: #1a237e;

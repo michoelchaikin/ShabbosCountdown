@@ -78,10 +78,20 @@
 
 <main>
   <div class="container">
+    <h1 class="title">Shabbos Countdown</h1>
     <div class="info">
-      <p class="info-item"><Icon icon={bookOpenPageVariant} color="#1a237e" /> &nbsp;<span class="info-text">{nextSedra}</span></p>
-      <p class="info-item"><Icon icon={candle} color="#1a237e" /> <span class="info-text">{candleLighting}</span></p>
-      <p class="info-item"><Icon icon={mapMarker} color="#1a237e" /> <span class="info-text">Melbourne</span></p>
+      <div class="info-item">
+        <Icon icon={bookOpenPageVariant} color="#1a237e" />
+        <span class="info-text">{nextSedra}</span>
+      </div>
+      <div class="info-item">
+        <Icon icon={candle} color="#1a237e" />
+        <span class="info-text">{candleLighting}</span>
+      </div>
+      <div class="info-item">
+        <Icon icon={mapMarker} color="#1a237e" />
+        <span class="info-text">Melbourne</span>
+      </div>
     </div>
     <div class="countdown">
       {#each [{value: days, label: 'Days'}, {value: hours, label: 'Hours'}, {value: minutes, label: 'Minutes'}, {value: seconds, label: 'Seconds'}] as unit}
@@ -115,25 +125,42 @@
     width: 90%;
   }
 
+  .title {
+    font-size: 2em;
+    color: #1a237e;
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 300;
+  }
+
   .info {
+    display: flex;
+    justify-content: space-around;
     margin-bottom: 40px;
+    flex-wrap: wrap;
   }
 
   .info-item {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    margin: 15px 0;
+    padding: 15px;
+    transition: transform 0.3s ease;
+  }
+
+  .info-item:hover {
+    transform: translateY(-5px);
   }
 
   :global(.iconify) {
-    font-size: 1.5em;
-    margin-right: 10px;
+    font-size: 2em;
+    margin-bottom: 10px;
   }
 
   .info-text {
     font-weight: 500;
     color: #1a237e;
+    text-align: center;
   }
 
   .countdown {
@@ -149,27 +176,28 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10px;
+    padding: 15px;
     background-color: #f0f4f8;
-    border-radius: 10px;
-    transition: transform 0.3s ease;
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     flex: 1;
-    min-width: 60px;
+    min-width: 70px;
     margin: 0 5px;
   }
 
   .time-unit:hover {
     transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   }
 
   .number {
-    font-size: 1.8em;
+    font-size: 2em;
     font-weight: bold;
     color: #1a237e;
   }
 
   .label {
-    font-size: 0.7em;
+    font-size: 0.8em;
     text-transform: uppercase;
     margin-top: 5px;
     color: #5c6bc0;
@@ -180,17 +208,25 @@
       padding: 20px;
     }
 
-    .time-unit {
-      padding: 8px;
-      min-width: 50px;
-    }
-
-    .number {
+    .title {
       font-size: 1.5em;
     }
 
+    .info-item {
+      padding: 10px;
+    }
+
+    .time-unit {
+      padding: 10px;
+      min-width: 60px;
+    }
+
+    .number {
+      font-size: 1.6em;
+    }
+
     .label {
-      font-size: 0.6em;
+      font-size: 0.7em;
     }
   }
 </style>

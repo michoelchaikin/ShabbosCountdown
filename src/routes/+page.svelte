@@ -79,7 +79,7 @@
 <main>
   <div class="container">
     <div class="info">
-      <p class="info-item"><Icon icon={bookOpenPageVariant} /> <span class="info-text">{nextSedra}</span></p>
+      <p class="info-item"><Icon icon={bookOpenPageVariant} /> &nbsp;<span class="info-text">{nextSedra}</span></p>
       <p class="info-item"><Icon icon={candle} /> <span class="info-text">{candleLighting}</span></p>
       <p class="info-item"><Icon icon={mapMarker} /> <span class="info-text">Melbourne</span></p>
     </div>

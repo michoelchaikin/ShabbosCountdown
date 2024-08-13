@@ -40,7 +40,9 @@
     candleLighting = Utils.getTimeString(candleLightingTime);
 
     // Convert candleLightingTime to a JavaScript Date object
-    const candleLightingDate = new Date(candleLightingTime);
+    const [hours, minutes] = candleLighting.split(':').map(Number);
+    const candleLightingDate = new Date();
+    candleLightingDate.setHours(hours, minutes, 0, 0);
 
     // Set up countdown timer
     const updateCountdown = () => {

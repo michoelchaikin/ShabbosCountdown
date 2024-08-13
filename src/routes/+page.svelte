@@ -78,7 +78,6 @@
 
 <main>
   <div class="container">
-    <h1 class="title">Shabbos Countdown</h1>
     <div class="info">
       <div class="info-item">
         <Icon icon={bookOpenPageVariant} color="#1a237e" width="48" height="48" />
@@ -123,14 +122,6 @@
     padding: 40px;
     max-width: 600px;
     width: 90%;
-  }
-
-  .title {
-    font-size: 2em;
-    color: #1a237e;
-    text-align: center;
-    margin-bottom: 30px;
-    font-weight: 300;
   }
 
   .info {
@@ -202,10 +193,6 @@
   @media (max-width: 480px) {
     .container {
       padding: 20px;
-    }
-
-    .title {
-      font-size: 1.5em;
     }
 
     .info-item {

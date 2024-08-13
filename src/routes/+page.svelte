@@ -153,14 +153,15 @@
   }
 
   :global(.iconify) {
-    font-size: 2em;
-    margin-bottom: 10px;
+    font-size: 2.5em;
+    margin-bottom: 15px;
   }
 
   .info-text {
     font-weight: 500;
     color: #1a237e;
     text-align: center;
+    margin-top: 5px;
   }
 
   .countdown {

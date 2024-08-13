@@ -14,18 +14,15 @@
     if (difference <= 0) {
       // Check if it's past Friday sunset
       if (now.getDay() === 5 && now.getHours() >= 18) {
-        return "It's Shabbos!";
+        timeRemaining = "It's Shabbos!";
+        return;
       } else {
         // If it's past the target time but not Shabbos, recalculate for next week
         const nextWeekTarget = new Date(targetDate.getTime() + 7 * 24 * 60 * 60 * 1000);
-        return calculateTimeRemaining(nextWeekTarget);
+        calculateTimeRemaining(nextWeekTarget);
+        return;
       }
     }
-
-    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
     days = Math.floor(difference / (1000 * 60 * 60 * 24));
     hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));

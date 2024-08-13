@@ -153,7 +153,7 @@
   }
 
   :global(.iconify) {
-    font-size: 2.5em;
+    font-size: 3em;
     margin-bottom: 15px;
   }
 

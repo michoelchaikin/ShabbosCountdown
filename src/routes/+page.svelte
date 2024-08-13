@@ -43,7 +43,8 @@
     const thursdayBeforeShabbos = nextFriday.addDays(-1);
 
     nextSedra = nextFriday.getSedra(true).toString();
-    candleLighting = Utils.getTimeString(thursdayBeforeShabbos.getCandleLighting(melbourne));
+    const candleLightingTime = thursdayBeforeShabbos.getCandleLighting(melbourne);
+    candleLighting = Utils.getTimeString(candleLightingTime).slice(0, -3); // Remove seconds
 
     // Set up the candle lighting date for the countdown
     const gregorianDate = nextFriday.getDate();

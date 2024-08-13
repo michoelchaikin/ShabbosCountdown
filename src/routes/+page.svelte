@@ -52,7 +52,10 @@
 
     // Set up the candle lighting date for the countdown
     const gregorianDate = nextFriday.getDate();
-    const [candleHours, candleMinutes] = candleLighting.split(':')[0].split(':').map(Number);
+    const [time, period] = candleLighting.split(' ');
+    let [candleHours, candleMinutes] = time.split(':').map(Number);
+    if (period === 'PM' && candleHours !== 12) candleHours += 12;
+    if (period === 'AM' && candleHours === 12) candleHours = 0;
     const candleLightingDate = new Date(gregorianDate.getFullYear(), gregorianDate.getMonth(), gregorianDate.getDate(), candleHours, candleMinutes);
 
     // Set up countdown timer

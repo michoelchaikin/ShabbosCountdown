@@ -5,11 +5,13 @@
   import bookOpenPageVariant from '@iconify-icons/mdi/book-open-page-variant';
   import candle from '@iconify-icons/mdi/candle';
   import mapMarker from '@iconify-icons/mdi/map-marker';
+  import { page } from '$app/stores';
 
   let nextSedra = '';
   let candleLighting = '';
   let timeRemaining = '';
   let days = 0, hours = 0, minutes = 0, seconds = 0;
+  let location = '';
 
   function calculateTimeRemaining(targetDate: Date): void {
     const now = new Date();
@@ -35,9 +37,15 @@
   }
 
   onMount(() => {
+    location = $page.url.searchParams.get('location') || 'Melbourne';
     const today = jDate.now();
-    const melbourne = findLocation('Melbourne');
+    const locationObj = findLocation(location);
     
+    if (!locationObj) {
+      console.error('Invalid location');
+      return;
+    }
+
     // Find the next Friday
     let nextFriday = today;
     while (nextFriday.DayOfWeek !== 6) {
@@ -48,7 +56,7 @@
     const thursdayBeforeShabbos = nextFriday.addDays(-1);
 
     nextSedra = nextFriday.getSedra(true).toString();
-    const candleLightingTime = thursdayBeforeShabbos.getCandleLighting(melbourne);
+    const candleLightingTime = thursdayBeforeShabbos.getCandleLighting(locationObj);
     const timeString = Utils.getTimeString(candleLightingTime);
     let [hours, minutes] = timeString.split(':').map(Number);
     const formattedHours = (hours % 12 || 12).toString();
@@ -89,7 +97,7 @@
       </div>
       <div class="info-item">
         <Icon icon={mapMarker} color="#1a237e" width="48" height="48" />
-        <span class="info-text">Melbourne</span>
+        <span class="info-text">{location}</span>
       </div>
     </div>
     <div class="countdown">

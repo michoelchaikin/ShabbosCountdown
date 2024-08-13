@@ -10,7 +10,7 @@
     const today = jDate.now();
     jewishDate = today.toString();
 
-    const jerusalem = findLocation('Jerusalem');
+    const melbourne = findLocation('Melbourne');
     
     // Find the next Friday
     let nextFriday = today;
@@ -22,7 +22,7 @@
     const thursdayBeforeShabbos = nextFriday.addDays(-1);
 
     nextSedra = nextFriday.getSedra(true).toString();
-    const candleLightingTime = thursdayBeforeShabbos.getCandleLighting(jerusalem);
+    const candleLightingTime = thursdayBeforeShabbos.getCandleLighting(melbourne);
     candleLighting = Utils.getTimeString(candleLightingTime);
   });
 </script>
@@ -30,4 +30,4 @@
 <h1>Shabbos Countdown</h1>
 <p>Today's Hebrew Date: {jewishDate}</p>
 <p>Next Sedra: {nextSedra}</p>
-<p>Candle Lighting in Jerusalem: {candleLighting}</p>
+<p>Candle Lighting in Melbourne: {candleLighting}</p>

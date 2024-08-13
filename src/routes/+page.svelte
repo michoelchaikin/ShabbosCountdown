@@ -104,10 +104,10 @@
 </main>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Roboto:wght@300;400;700&display=swap');
 
   main {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Lato', sans-serif;
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -185,6 +185,7 @@
   }
 
   .label {
+    font-family: 'Lato', sans-serif;
     font-size: 0.8em;
     text-transform: uppercase;
     margin-top: 5px;

@@ -39,56 +39,42 @@
   }
 
   onMount(async () => {
-    console.log('onMount started');
     location = $page.url.searchParams.get('location') || 'Melbourne';
-    console.log('Location:', location);
     const today = jDate.now();
-    console.log('Today:', today.toString());
     const locationObj = findLocation(location);
     
     if (!locationObj) {
-      console.error('Invalid location');
       isLoading = false;
       return;
     }
-    console.log('Location object:', locationObj);
 
     // Find the next Friday
     let nextFriday = today;
     while (nextFriday.DayOfWeek !== 6) {
       nextFriday = nextFriday.addDays(1);
     }
-    console.log('Next Friday:', nextFriday.toString());
 
     // Get the day before (Thursday) for candle lighting
     const thursdayBeforeShabbos = nextFriday.addDays(-1);
-    console.log('Thursday before Shabbos:', thursdayBeforeShabbos.toString());
 
     nextSedra = nextFriday.getSedra(true).toString();
-    console.log('Next Sedra:', nextSedra);
     const candleLightingTime = thursdayBeforeShabbos.getCandleLighting(locationObj);
-    console.log('Candle lighting time:', candleLightingTime);
     const timeString = Utils.getTimeString(candleLightingTime);
-    console.log('Time string:', timeString);
     let [hours, minutes] = timeString.split(':').map(Number);
     const formattedHours = (hours % 12 || 12).toString();
     candleLighting = `${formattedHours}:${minutes.toString().padStart(2, '0')} PM`;
-    console.log('Formatted candle lighting time:', candleLighting);
 
     // Set up the candle lighting date for the countdown
     const gregorianDate = nextFriday.getDate();
-    console.log('Gregorian date:', gregorianDate);
     const [time, period] = candleLighting.split(' ');
     let [candleHours, candleMinutes] = time.split(':').map(Number);
     if (period === 'PM' && candleHours !== 12) candleHours += 12;
     if (period === 'AM' && candleHours === 12) candleHours = 0;
     const candleLightingDate = new Date(gregorianDate.getFullYear(), gregorianDate.getMonth(), gregorianDate.getDate(), candleHours, candleMinutes);
-    console.log('Candle lighting date:', candleLightingDate);
 
     // Set up countdown timer
     const updateCountdown = () => {
       calculateTimeRemaining(candleLightingDate);
-      console.log('Countdown updated:', { days, hours, minutes, seconds });
     };
 
     updateCountdown(); // Initial call
@@ -97,11 +83,9 @@
     // Simulate a short delay to show the loading animation
     await new Promise(resolve => setTimeout(resolve, 1000));
     isLoading = false;
-    console.log('Loading finished');
 
     return () => {
       clearInterval(countdownInterval); // Clean up on component unmount
-      console.log('Component unmounted, interval cleared');
     };
   });
 </script>

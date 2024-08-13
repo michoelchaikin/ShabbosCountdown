@@ -32,7 +32,9 @@
 		"vitest": "^1.2.0"
 	},
 	"dependencies": {
-		"jcal-zmanim": "^1.2.6"
+		"jcal-zmanim": "^1.2.6",
+		"@iconify/svelte": "^3.1.4",
+		"@iconify-icons/mdi": "^1.2.48"
 	},
 	"type": "module"
 }

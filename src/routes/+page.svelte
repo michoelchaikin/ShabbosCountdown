@@ -160,6 +160,10 @@
     color: #1a237e;
   }
 
+  .loading p {
+    font-family: 'Lato', sans-serif;
+  }
+
   .spinner {
     border: 4px solid #f3f3f3;
     border-top: 4px solid #1a237e;
@@ -250,6 +254,10 @@
     text-transform: uppercase;
     margin-top: 5px;
     color: #5c6bc0;
+  }
+
+  .info-text {
+    font-family: 'Lato', sans-serif;
   }
 
   @media (max-width: 480px) {

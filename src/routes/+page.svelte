@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { fade } from 'svelte/transition';
   import { jDate, findLocation, Utils } from 'jcal-zmanim';
   import Icon from '@iconify/svelte';
   import bookOpenPageVariant from '@iconify-icons/mdi/book-open-page-variant';
@@ -12,6 +13,7 @@
   let timeRemaining = '';
   let days = 0, hours = 0, minutes = 0, seconds = 0;
   let location = '';
+  let isLoading = true;
 
   function calculateTimeRemaining(targetDate: Date): void {
     const now = new Date();
@@ -36,7 +38,7 @@
     seconds = Math.floor((difference % (1000 * 60)) / 1000);
   }
 
-  onMount(() => {
+  onMount(async () => {
     location = $page.url.searchParams.get('location') || 'Melbourne';
     const today = jDate.now();
     const locationObj = findLocation(location);
@@ -81,11 +83,21 @@
     return () => {
       clearInterval(countdownInterval); // Clean up on component unmount
     };
+
+    // Simulate a short delay to show the loading animation
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    isLoading = false;
   });
 </script>
 
 <main>
-  <div class="container">
+  {#if isLoading}
+    <div class="loading">
+      <div class="spinner"></div>
+      <p>Loading...</p>
+    </div>
+  {:else}
+    <div class="container" transition:fade={{ duration: 300 }}>
     <div class="info">
       <div class="info-item">
         <Icon icon={bookOpenPageVariant} color="#1a237e" width="48" height="48" />
@@ -108,13 +120,46 @@
         </div>
       {/each}
     </div>
-  </div>
+    </div>
+  {/if}
 </main>
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Roboto:wght@300;400;700&display=swap');
 
   main {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  }
+
+  .loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Lato', sans-serif;
+    color: #1a237e;
+  }
+
+  .spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #1a237e;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .container {
     font-family: 'Lato', sans-serif;
     min-height: 100vh;
     display: flex;

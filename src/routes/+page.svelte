@@ -81,15 +81,15 @@
     <h1 class="title">Shabbos Countdown</h1>
     <div class="info">
       <div class="info-item">
-        <Icon icon={bookOpenPageVariant} color="#1a237e" />
+        <Icon icon={bookOpenPageVariant} color="#1a237e" width="48" height="48" />
         <span class="info-text">{nextSedra}</span>
       </div>
       <div class="info-item">
-        <Icon icon={candle} color="#1a237e" />
+        <Icon icon={candle} color="#1a237e" width="48" height="48" />
         <span class="info-text">{candleLighting}</span>
       </div>
       <div class="info-item">
-        <Icon icon={mapMarker} color="#1a237e" />
+        <Icon icon={mapMarker} color="#1a237e" width="48" height="48" />
         <span class="info-text">Melbourne</span>
       </div>
     </div>
@@ -152,16 +152,11 @@
     transform: translateY(-5px);
   }
 
-  :global(.iconify) {
-    font-size: 3em;
-    margin-bottom: 15px;
-  }
-
   .info-text {
     font-weight: 500;
     color: #1a237e;
     text-align: center;
-    margin-top: 5px;
+    margin-top: 15px;
   }
 
   .countdown {

@@ -104,10 +104,10 @@
 </main>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap');
 
   main {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Playfair Display', serif;
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -178,6 +178,7 @@
   }
 
   .number {
+    font-family: 'Roboto', sans-serif;
     font-size: 2em;
     font-weight: bold;
     color: #1a237e;

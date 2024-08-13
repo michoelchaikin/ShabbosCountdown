@@ -18,8 +18,11 @@
       nextFriday = nextFriday.addDays(1);
     }
 
+    // Get the day before (Thursday) for candle lighting
+    const thursdayBeforeShabbos = nextFriday.addDays(-1);
+
     nextSedra = nextFriday.getSedra(true).toString();
-    const candleLightingTime = nextFriday.getCandleLighting(jerusalem);
+    const candleLightingTime = thursdayBeforeShabbos.getCandleLighting(jerusalem);
     candleLighting = Utils.getTimeString(candleLightingTime);
   });
 </script>

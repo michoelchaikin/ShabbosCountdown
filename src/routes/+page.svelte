@@ -19,7 +19,7 @@
     }
 
     nextSedra = nextFriday.getSedra(true).toString();
-    const candleLightingTime = Utils.getCandleLighting(nextFriday, jerusalem);
+    const candleLightingTime = nextFriday.getCandleLighting(jerusalem);
     candleLighting = Utils.getTimeString(candleLightingTime);
   });
 </script>

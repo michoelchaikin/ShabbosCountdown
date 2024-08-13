@@ -11,7 +11,14 @@
     const difference = targetDate.getTime() - now.getTime();
 
     if (difference <= 0) {
-      return "It's Shabbos!";
+      // Check if it's past Friday sunset
+      if (now.getDay() === 5 && now.getHours() >= 18) {
+        return "It's Shabbos!";
+      } else {
+        // If it's past the target time but not Shabbos, recalculate for next week
+        const nextWeekTarget = new Date(targetDate.getTime() + 7 * 24 * 60 * 60 * 1000);
+        return calculateTimeRemaining(nextWeekTarget);
+      }
     }
 
     const days = Math.floor(difference / (1000 * 60 * 60 * 24));
@@ -41,7 +48,7 @@
 
     // Convert candleLightingTime to a JavaScript Date object
     const [hours, minutes] = candleLighting.split(':').map(Number);
-    const candleLightingDate = new Date();
+    const candleLightingDate = new Date(nextFriday.getFullYear(), nextFriday.getMonth(), nextFriday.getDate());
     candleLightingDate.setHours(hours, minutes, 0, 0);
 
     // Set up countdown timer

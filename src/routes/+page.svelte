@@ -79,9 +79,9 @@
 <main>
   <div class="container">
     <div class="info">
-      <p class="info-item"><Icon icon={bookOpenPageVariant} /> &nbsp;<span class="info-text">{nextSedra}</span></p>
-      <p class="info-item"><Icon icon={candle} /> <span class="info-text">{candleLighting}</span></p>
-      <p class="info-item"><Icon icon={mapMarker} /> <span class="info-text">Melbourne</span></p>
+      <p class="info-item"><Icon icon={bookOpenPageVariant} color="#1a237e" /> &nbsp;<span class="info-text">{nextSedra}</span></p>
+      <p class="info-item"><Icon icon={candle} color="#1a237e" /> <span class="info-text">{candleLighting}</span></p>
+      <p class="info-item"><Icon icon={mapMarker} color="#1a237e" /> <span class="info-text">Melbourne</span></p>
     </div>
     <div class="countdown">
       {#each [{value: days, label: 'Days'}, {value: hours, label: 'Hours'}, {value: minutes, label: 'Minutes'}, {value: seconds, label: 'Seconds'}] as unit}
@@ -129,7 +129,6 @@
   :global(.iconify) {
     font-size: 1.5em;
     margin-right: 10px;
-    color: #1a237e !important;
   }
 
   .info-text {

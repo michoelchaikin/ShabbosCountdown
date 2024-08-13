@@ -75,8 +75,8 @@
 <main>
   <h1>Shabbos Countdown</h1>
   <div class="info">
-    <p>📖 Next Sedra: <span>{nextSedra}</span></p>
-    <p>🕯️ Candle Lighting: <span>{candleLighting}</span></p>
+    <p>📖 <span>{nextSedra}</span></p>
+    <p>🕯️ <span>{candleLighting}</span></p>
     <p>📍 Melbourne</p>
   </div>
   <div class="countdown">

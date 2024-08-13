@@ -48,7 +48,8 @@
 
     // Convert candleLightingTime to a JavaScript Date object
     const [hours, minutes] = candleLighting.split(':').map(Number);
-    const candleLightingDate = new Date(nextFriday.getFullYear(), nextFriday.getMonth(), nextFriday.getDate());
+    const gregorianDate = nextFriday.getDate();
+    const candleLightingDate = new Date(gregorianDate.getFullYear(), gregorianDate.getMonth(), gregorianDate.getDate());
     candleLightingDate.setHours(hours, minutes, 0, 0);
 
     // Set up countdown timer

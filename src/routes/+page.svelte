@@ -46,10 +46,9 @@
     nextSedra = nextFriday.getSedra(true).toString();
     const candleLightingTime = thursdayBeforeShabbos.getCandleLighting(melbourne);
     const timeString = Utils.getTimeString(candleLightingTime);
-    const [hours, minutes] = timeString.split(':');
-    const ampm = parseInt(hours) >= 12 ? 'PM' : 'AM';
-    const formattedHours = (parseInt(hours) % 12 || 12).toString();
-    candleLighting = `${formattedHours}:${minutes} ${ampm}`;
+    let [hours, minutes] = timeString.split(':').map(Number);
+    const formattedHours = (hours % 12 || 12).toString();
+    candleLighting = `${formattedHours}:${minutes.toString().padStart(2, '0')} PM`;
 
     // Set up the candle lighting date for the countdown
     const gregorianDate = nextFriday.getDate();

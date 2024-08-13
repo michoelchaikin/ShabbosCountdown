@@ -44,7 +44,10 @@
 
     nextSedra = nextFriday.getSedra(true).toString();
     const candleLightingTime = thursdayBeforeShabbos.getCandleLighting(melbourne);
-    candleLighting = Utils.getTimeString(candleLightingTime);
+    // Round down to nearest minute
+    const roundedCandleLightingTime = new Date(candleLightingTime.getTime());
+    roundedCandleLightingTime.setSeconds(0, 0);
+    candleLighting = Utils.getTimeString(roundedCandleLightingTime);
 
     // Convert candleLightingTime to a JavaScript Date object
     const [hours, minutes] = candleLighting.split(':').map(Number);

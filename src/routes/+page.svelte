@@ -39,9 +39,12 @@
     const candleLightingTime = thursdayBeforeShabbos.getCandleLighting(melbourne);
     candleLighting = Utils.getTimeString(candleLightingTime);
 
+    // Convert candleLightingTime to a JavaScript Date object
+    const candleLightingDate = new Date(candleLightingTime);
+
     // Set up countdown timer
     const updateCountdown = () => {
-      timeRemaining = calculateTimeRemaining(candleLightingTime);
+      timeRemaining = calculateTimeRemaining(candleLightingDate);
     };
 
     updateCountdown(); // Initial call

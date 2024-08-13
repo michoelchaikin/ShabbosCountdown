@@ -136,16 +136,22 @@
     display: flex;
     justify-content: space-between;
     margin-top: 30px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 10px;
   }
 
   .time-unit {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 15px;
+    padding: 10px;
     background-color: #f0f4f8;
     border-radius: 10px;
     transition: transform 0.3s ease;
+    flex: 1;
+    min-width: 60px;
+    margin: 0 5px;
   }
 
   .time-unit:hover {
@@ -153,26 +159,34 @@
   }
 
   .number {
-    font-size: 2.5em;
+    font-size: 1.8em;
     font-weight: bold;
     color: #1a237e;
   }
 
   .label {
-    font-size: 0.9em;
+    font-size: 0.7em;
     text-transform: uppercase;
     margin-top: 5px;
     color: #5c6bc0;
   }
 
   @media (max-width: 480px) {
-    .countdown {
-      flex-wrap: wrap;
+    .container {
+      padding: 20px;
     }
 
     .time-unit {
-      width: 45%;
-      margin-bottom: 15px;
+      padding: 8px;
+      min-width: 50px;
+    }
+
+    .number {
+      font-size: 1.5em;
+    }
+
+    .label {
+      font-size: 0.6em;
     }
   }
 </style>

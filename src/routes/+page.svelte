@@ -73,52 +73,62 @@
 </script>
 
 <main>
-  <div class="info">
-    <p>📖 <span>{nextSedra}</span></p>
-    <p>🕯️ <span>{candleLighting}</span></p>
-    <p>📍 Melbourne</p>
-  </div>
-  <div class="countdown">
-    <div class="time-unit">
-      <span class="number">{days}</span>
-      <span class="label">Days</span>
+  <div class="container">
+    <div class="info">
+      <p class="info-item"><span class="emoji">📖</span> <span class="info-text">{nextSedra}</span></p>
+      <p class="info-item"><span class="emoji">🕯️</span> <span class="info-text">{candleLighting}</span></p>
+      <p class="info-item"><span class="emoji">📍</span> <span class="info-text">Melbourne</span></p>
     </div>
-    <div class="time-unit">
-      <span class="number">{hours}</span>
-      <span class="label">Hours</span>
-    </div>
-    <div class="time-unit">
-      <span class="number">{minutes}</span>
-      <span class="label">Minutes</span>
-    </div>
-    <div class="time-unit">
-      <span class="number">{seconds}</span>
-      <span class="label">Seconds</span>
+    <div class="countdown">
+      {#each [{value: days, label: 'Days'}, {value: hours, label: 'Hours'}, {value: minutes, label: 'Minutes'}, {value: seconds, label: 'Seconds'}] as unit}
+        <div class="time-unit">
+          <span class="number">{unit.value}</span>
+          <span class="label">{unit.label}</span>
+        </div>
+      {/each}
     </div>
   </div>
 </main>
 
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
   main {
-    font-family: Arial, sans-serif;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    text-align: center;
-    color: #333;
+    font-family: 'Roboto', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   }
 
+  .container {
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    max-width: 600px;
+    width: 90%;
+  }
 
   .info {
-    margin-bottom: 30px;
+    margin-bottom: 40px;
   }
 
-  .info p {
-    margin: 10px 0;
+  .info-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px 0;
   }
 
-  .info span {
-    font-weight: bold;
+  .emoji {
+    font-size: 1.5em;
+    margin-right: 10px;
+  }
+
+  .info-text {
+    font-weight: 500;
     color: #1a237e;
   }
 
@@ -132,10 +142,18 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 15px;
+    background-color: #f0f4f8;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+  }
+
+  .time-unit:hover {
+    transform: translateY(-5px);
   }
 
   .number {
-    font-size: 3em;
+    font-size: 2.5em;
     font-weight: bold;
     color: #1a237e;
   }
@@ -144,5 +162,17 @@
     font-size: 0.9em;
     text-transform: uppercase;
     margin-top: 5px;
+    color: #5c6bc0;
+  }
+
+  @media (max-width: 480px) {
+    .countdown {
+      flex-wrap: wrap;
+    }
+
+    .time-unit {
+      width: 45%;
+      margin-bottom: 15px;
+    }
   }
 </style>

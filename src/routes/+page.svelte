@@ -43,17 +43,12 @@
     const thursdayBeforeShabbos = nextFriday.addDays(-1);
 
     nextSedra = nextFriday.getSedra(true).toString();
-    const candleLightingTime = thursdayBeforeShabbos.getCandleLighting(melbourne);
-    // Round down to nearest minute
-    const roundedCandleLightingTime = new Date(candleLightingTime.getTime());
-    roundedCandleLightingTime.setSeconds(0, 0);
-    candleLighting = Utils.getTimeString(roundedCandleLightingTime);
+    candleLighting = Utils.getTimeString(thursdayBeforeShabbos.getCandleLighting(melbourne));
 
-    // Convert candleLightingTime to a JavaScript Date object
-    const [hours, minutes] = candleLighting.split(':').map(Number);
+    // Set up the candle lighting date for the countdown
     const gregorianDate = nextFriday.getDate();
-    const candleLightingDate = new Date(gregorianDate.getFullYear(), gregorianDate.getMonth(), gregorianDate.getDate());
-    candleLightingDate.setHours(hours, minutes, 0, 0);
+    const [hours, minutes] = candleLighting.split(':').map(Number);
+    const candleLightingDate = new Date(gregorianDate.getFullYear(), gregorianDate.getMonth(), gregorianDate.getDate(), hours, minutes);
 
     // Set up countdown timer
     const updateCountdown = () => {

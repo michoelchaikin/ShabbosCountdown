@@ -2,14 +2,11 @@
   import { onMount } from 'svelte';
   import { jDate, findLocation, Utils } from 'jcal-zmanim';
 
-  let jewishDate = '';
   let nextSedra = '';
   let candleLighting = '';
 
   onMount(() => {
     const today = jDate.now();
-    jewishDate = today.toString();
-
     const melbourne = findLocation('Melbourne');
     
     // Find the next Friday
@@ -28,6 +25,5 @@
 </script>
 
 <h1>Shabbos Countdown</h1>
-<p>Today's Hebrew Date: {jewishDate}</p>
 <p>Next Sedra: {nextSedra}</p>
 <p>Candle Lighting in Melbourne: {candleLighting}</p>

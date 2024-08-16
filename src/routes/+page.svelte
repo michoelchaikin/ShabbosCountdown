@@ -68,28 +68,47 @@
       return;
     }
 
-    // Find the next Friday or use today if it's Friday
+    // Find the next Friday that's not today
     let nextFriday = today;
-    if (nextFriday.DayOfWeek !== 6) {
-      while (nextFriday.DayOfWeek !== 6) {
-        nextFriday = nextFriday.addDays(1);
-      }
+    while (nextFriday.DayOfWeek !== 6 || nextFriday.getDate().getTime() === today.getDate().getTime()) {
+      nextFriday = nextFriday.addDays(1);
     }
 
     nextSedra = nextFriday.getSedra(true).toString();
-    const candleLightingTime = nextFriday.getCandleLighting(locationObj);
-    const timeString = Utils.getTimeString(candleLightingTime);
-    let [hours, minutes] = timeString.split(':').map(Number);
-    const formattedHours = (hours % 12 || 12).toString();
-    candleLighting = `${formattedHours}:${minutes.toString().padStart(2, '0')} PM`;
 
-    // Set up the candle lighting date for the countdown
-    const gregorianDate = nextFriday.getDate();
-    const [time, period] = candleLighting.split(' ');
-    let [candleHours, candleMinutes] = time.split(':').map(Number);
-    if (period === 'PM' && candleHours !== 12) candleHours += 12;
-    if (period === 'AM' && candleHours === 12) candleHours = 0;
-    const candleLightingDate = new Date(gregorianDate.getFullYear(), gregorianDate.getMonth(), gregorianDate.getDate(), candleHours, candleMinutes);
+    // Get the candle lighting time for the upcoming Friday
+    const candleLightingTime = nextFriday.getCandleLighting(locationObj);
+    
+    if (candleLightingTime) {
+      const timeString = Utils.getTimeString(candleLightingTime);
+      let [hours, minutes] = timeString.split(':').map(Number);
+      const formattedHours = (hours % 12 || 12).toString();
+      candleLighting = `${formattedHours}:${minutes.toString().padStart(2, '0')} PM`;
+
+      // Set up the candle lighting date for the countdown
+      const gregorianDate = nextFriday.getDate();
+      const [time, period] = candleLighting.split(' ');
+      let [candleHours, candleMinutes] = time.split(':').map(Number);
+      if (period === 'PM' && candleHours !== 12) candleHours += 12;
+      if (period === 'AM' && candleHours === 12) candleHours = 0;
+      const candleLightingDate = new Date(gregorianDate.getFullYear(), gregorianDate.getMonth(), gregorianDate.getDate(), candleHours, candleMinutes);
+
+      // Set up countdown timer
+      const updateCountdown = () => {
+        calculateTimeRemaining(candleLightingDate);
+      };
+
+      updateCountdown(); // Initial call
+      const countdownInterval = setInterval(updateCountdown, 1000);
+
+      return () => {
+        clearInterval(countdownInterval); // Clean up on component unmount
+      };
+    } else {
+      // Handle case when candle lighting time is not available
+      candleLighting = "Not available";
+      timeRemaining = "Countdown not available";
+    }
 
     // Set up countdown timer
     const updateCountdown = () => {

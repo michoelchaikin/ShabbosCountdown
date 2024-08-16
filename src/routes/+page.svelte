@@ -42,8 +42,9 @@
       }
     }
 
-    days = Math.floor(difference / (1000 * 60 * 60 * 24));
-    hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const totalHours = Math.floor(difference / (1000 * 60 * 60));
+    days = Math.floor(totalHours / 24);
+    hours = totalHours % 24;
     minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
     seconds = Math.floor((difference % (1000 * 60)) / 1000);
   }
@@ -133,10 +134,12 @@
     </div>
     <div class="countdown">
       {#each [{value: days, label: 'Days'}, {value: hours, label: 'Hours'}, {value: minutes, label: 'Minutes'}, {value: seconds, label: 'Seconds'}] as unit}
-        <div class="time-unit">
-          <span class="number">{unit.value}</span>
-          <span class="label">{unit.label}</span>
-        </div>
+        {#if unit.label !== 'Days' || unit.value > 0}
+          <div class="time-unit">
+            <span class="number">{unit.value}</span>
+            <span class="label">{unit.label}</span>
+          </div>
+        {/if}
       {/each}
     </div>
     </div>

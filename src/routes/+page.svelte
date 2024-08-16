@@ -211,12 +211,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10px;
+    justify-content: center;
+    padding: 10px 5px;
     background-color: var(--time-unit-bg, #f0f4f8);
     border-radius: 15px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     flex: 1;
-    margin: 0 5px;
+    min-width: 0;
+    margin: 0 2px;
   }
 
   .time-unit:hover {
@@ -229,6 +231,8 @@
     font-size: 1.5em;
     font-weight: bold;
     color: var(--primary-color, #1a237e);
+    min-width: 1.5em;
+    text-align: center;
   }
 
   .label {
@@ -237,6 +241,7 @@
     text-transform: uppercase;
     margin-top: 5px;
     color: var(--secondary-color, #5c6bc0);
+    text-align: center;
   }
 
   @media (max-width: 600px) {
@@ -250,6 +255,20 @@
 
     .label {
       font-size: 0.6em;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .time-unit {
+      padding: 5px 2px;
+    }
+
+    .number {
+      font-size: 1em;
+    }
+
+    .label {
+      font-size: 0.5em;
     }
   }
 

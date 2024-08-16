@@ -10,7 +10,6 @@
 
   let nextSedra = '';
   let candleLighting = '';
-  let timeRemaining = '';
   let days = 0, hours = 0, minutes = 0, seconds = 0;
   let location = '';
   let isLoading = true;
@@ -29,24 +28,10 @@
     const now = new Date();
     const difference = targetDate.getTime() - now.getTime();
 
-    if (difference <= 0) {
-      // Check if it's past Friday sunset
-      if (now.getDay() === 5 && now.getHours() >= 18) {
-        timeRemaining = "It's Shabbos!";
-        return;
-      } else {
-        // If it's past the target time but not Shabbos, recalculate for next week
-        const nextWeekTarget = new Date(targetDate.getTime() + 7 * 24 * 60 * 60 * 1000);
-        calculateTimeRemaining(nextWeekTarget);
-        return;
-      }
-    }
-
-    const totalSeconds = Math.floor(difference / 1000);
-    days = 0; // Always set days to 0 as we're calculating for the current week
-    hours = Math.floor(totalSeconds / 3600);
-    minutes = Math.floor((totalSeconds % 3600) / 60);
-    seconds = totalSeconds % 60;
+    days = Math.floor(difference / (1000 * 60 * 60 * 24));
+    hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+    seconds = Math.floor((difference % (1000 * 60)) / 1000);
   }
 
   onMount(async () => {
@@ -60,7 +45,7 @@
     });
 
     location = $page.url.searchParams.get('location') || 'Melbourne';
-    const today = jDate.now();
+
     const locationObj = findLocation(location);
     
     if (!locationObj) {
@@ -68,80 +53,28 @@
       return;
     }
 
-    // Find the upcoming Friday (or today if it's Friday)
-    let friday = today;
-    if (friday.DayOfWeek === 7) {  // If it's Shabbos, move to next Friday
-      friday = friday.addDays(6);
-    } else {
-      while (friday.DayOfWeek !== 6) {
-        friday = friday.addDays(1);
-      }
-    }
-
+    const today = jDate.now();
+    let friday = today.addDays(today.DayOfWeek - 5);
     nextSedra = friday.getSedra(true).toString();
+    const candleLightingTime = friday.getCandleLighting(locationObj);
 
-    // Get the candle lighting time for the upcoming Friday
-    let candleLightingTime;
-    let attempts = 0;
-    const maxAttempts = 3;
+    candleLighting = `${candleLightingTime.hour - 12}:${candleLightingTime.minute} PM`;
 
-    while (!candleLightingTime && attempts < maxAttempts) {
-      try {
-        candleLightingTime = friday.getCandleLighting(locationObj);
-      } catch (error) {
-        console.error(`Attempt ${attempts + 1} failed:`, error);
-        friday = friday.addDays(7); // Move to next Friday
-        attempts++;
-      }
-    }
+    const candleLightingAsDate : Date = friday.getDate();
+    candleLightingAsDate.setHours(candleLightingTime.hour);
+    candleLightingAsDate.setMinutes(candleLightingTime.minute);
 
-    if (candleLightingTime) {
-      const timeString = Utils.getTimeString(candleLightingTime);
-      let [hours, minutes] = timeString.split(':').map(Number);
-      const formattedHours = (hours % 12 || 12).toString();
-      candleLighting = `${formattedHours}:${minutes.toString().padStart(2, '0')} PM`;
+    const updateCountdown = () => {
+      calculateTimeRemaining(candleLightingAsDate);
+    };
 
-      // Set up the candle lighting date for the countdown
-      const gregorianDate = friday.getDate();
-      const [time, period] = candleLighting.split(' ');
-      let [candleHours, candleMinutes] = time.split(':').map(Number);
-      if (period === 'PM' && candleHours !== 12) candleHours += 12;
-      if (period === 'AM' && candleHours === 12) candleHours = 0;
-      const candleLightingDate = new Date(gregorianDate.getFullYear(), gregorianDate.getMonth(), gregorianDate.getDate(), candleHours, candleMinutes);
-
-      // Set up countdown timer
-      const updateCountdown = () => {
-        const now = new Date();
-        if (now > candleLightingDate) {
-          // It's past the candle lighting time, recalculate for next week
-          candleLightingDate.setDate(candleLightingDate.getDate() + 7);
-        }
-        calculateTimeRemaining(candleLightingDate);
-      };
-
-      updateCountdown(); // Initial call
-      const countdownInterval = setInterval(updateCountdown, 1000);
-
-      // Simulate a short delay to show the loading animation
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      isLoading = false;
-
-      return () => {
-        clearInterval(countdownInterval); // Clean up on component unmount
-      };
-    } else {
-      console.error("Failed to get candle lighting time after multiple attempts");
-      candleLighting = "Not available";
-      timeRemaining = "Countdown not available";
-      isLoading = false;
-    }
-
-    // Simulate a short delay to show the loading animation
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    updateCountdown();
+    const countdownInterval = setInterval(updateCountdown, 1000);
+    
     isLoading = false;
 
     return () => {
-      clearInterval(countdownInterval); // Clean up on component unmount
+      clearInterval(countdownInterval);
     };
   });
 </script>
@@ -169,18 +102,12 @@
       </div>
     </div>
     <div class="countdown">
-      {#if timeRemaining === "It's Shabbos!"}
-        <div class="shabbos-message">{timeRemaining}</div>
-      {:else}
-        {#each [{value: days, label: 'Days'}, {value: hours, label: 'Hours'}, {value: minutes, label: 'Minutes'}, {value: seconds, label: 'Seconds'}] as unit}
-          {#if unit.value > 0 || (unit.label !== 'Days' && unit.label !== 'Hours')}
-            <div class="time-unit">
-              <span class="number">{unit.value}</span>
-              <span class="label">{unit.label}</span>
-            </div>
-          {/if}
-        {/each}
-      {/if}
+      {#each [{value: days, label: 'Days'}, {value: hours, label: 'Hours'}, {value: minutes, label: 'Minutes'}, {value: seconds, label: 'Seconds'}] as unit}
+        <div class="time-unit">
+          <span class="number">{unit.value}</span>
+          <span class="label">{unit.label}</span>
+        </div>
+      {/each}
     </div>
     </div>
   {/if}
@@ -332,18 +259,6 @@
     .label {
       font-size: 0.7em;
     }
-  }
-
-  .shabbos-message {
-    font-family: 'Lato', sans-serif;
-    font-size: 2em;
-    font-weight: bold;
-    color: var(--primary-color, #1a237e);
-    text-align: center;
-    padding: 20px;
-    background-color: var(--time-unit-bg, #f0f4f8);
-    border-radius: 15px;
-    width: 100%;
   }
 
   :global(.dark-mode) {

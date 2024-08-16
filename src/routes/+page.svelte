@@ -68,16 +68,16 @@
       return;
     }
 
-    // Find the upcoming Friday (including today if it's Friday)
-    let upcomingFriday = today;
-    while (upcomingFriday.DayOfWeek !== 6) {
-      upcomingFriday = upcomingFriday.addDays(1);
+    // Find the most recent Friday (including today if it's Friday)
+    let friday = today;
+    while (friday.DayOfWeek !== 6) {
+      friday = friday.addDays(-1);
     }
 
-    nextSedra = upcomingFriday.getSedra(true).toString();
+    nextSedra = friday.getSedra(true).toString();
 
-    // Get the candle lighting time for the upcoming Friday
-    const candleLightingTime = upcomingFriday.getCandleLighting(locationObj);
+    // Get the candle lighting time for Friday
+    const candleLightingTime = friday.getCandleLighting(locationObj);
     
     if (candleLightingTime) {
       const timeString = Utils.getTimeString(candleLightingTime);
@@ -95,7 +95,18 @@
 
       // Set up countdown timer
       const updateCountdown = () => {
-        calculateTimeRemaining(candleLightingDate);
+        const now = new Date();
+        if (now > candleLightingDate && now.getDay() === 6) {
+          // It's already Shabbos
+          timeRemaining = "It's Shabbos!";
+          clearInterval(countdownInterval);
+        } else if (now > candleLightingDate) {
+          // It's past the candle lighting time but not Shabbos, recalculate for next week
+          candleLightingDate.setDate(candleLightingDate.getDate() + 7);
+          calculateTimeRemaining(candleLightingDate);
+        } else {
+          calculateTimeRemaining(candleLightingDate);
+        }
       };
 
       updateCountdown(); // Initial call

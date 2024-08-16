@@ -132,7 +132,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    background: white;
   }
 
   .loading {
@@ -164,9 +164,6 @@
   }
 
   .container {
-    background-color: white;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     padding: 40px;
     max-width: 600px;
     width: 90%;
@@ -245,10 +242,6 @@
   }
 
   @media (max-width: 480px) {
-    .container {
-      padding: 20px;
-    }
-
     .info-item {
       padding: 10px;
     }

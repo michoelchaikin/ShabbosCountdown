@@ -294,9 +294,9 @@
   :global(.dark-mode) {
     --background-color: #121212;
     --text-color: #ffffff;
-    --primary-color: #bb86fc;
-    --secondary-color: #03dac6;
+    --primary-color: #d6b5ff;
+    --secondary-color: #64ffda;
     --time-unit-bg: #1f1f1f;
-    --spinner-color: #333333;
+    --spinner-color: #4d4d4d;
   }
 </style>

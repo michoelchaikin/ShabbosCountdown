@@ -14,6 +14,16 @@
   let days = 0, hours = 0, minutes = 0, seconds = 0;
   let location = '';
   let isLoading = true;
+  let isDarkMode = false;
+
+  function toggleDarkMode(darkMode: boolean) {
+    isDarkMode = darkMode;
+    if (isDarkMode) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+  }
 
   function calculateTimeRemaining(targetDate: Date): void {
     const now = new Date();
@@ -39,6 +49,15 @@
   }
 
   onMount(async () => {
+    // Check system preference for dark mode
+    const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    toggleDarkMode(prefersDarkMode);
+
+    // Listen for changes in system preference
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+      toggleDarkMode(e.matches);
+    });
+
     location = $page.url.searchParams.get('location') || 'Melbourne';
     const today = jDate.now();
     const locationObj = findLocation(location);
@@ -127,12 +146,24 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
 
+  :global(body) {
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  :global(body.dark-mode) {
+    background-color: #121212;
+    color: #ffffff;
+  }
+
   main {
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: white;
+    background: var(--background-color, white);
+    color: var(--text-color, #333);
   }
 
   .loading {
@@ -141,7 +172,7 @@
     align-items: center;
     justify-content: center;
     font-family: 'Lato', sans-serif;
-    color: #1a237e;
+    color: var(--primary-color, #1a237e);
   }
 
   .loading p {
@@ -149,8 +180,8 @@
   }
 
   .spinner {
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #1a237e;
+    border: 4px solid var(--spinner-color, #f3f3f3);
+    border-top: 4px solid var(--primary-color, #1a237e);
     border-radius: 50%;
     width: 40px;
     height: 40px;
@@ -190,7 +221,7 @@
 
   .info-text {
     font-weight: 500;
-    color: #1a237e;
+    color: var(--primary-color, #1a237e);
     text-align: center;
     margin-top: 10px;
   }
@@ -209,7 +240,7 @@
     flex-direction: column;
     align-items: center;
     padding: 15px;
-    background-color: #f0f4f8;
+    background-color: var(--time-unit-bg, #f0f4f8);
     border-radius: 15px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     flex: 1;
@@ -226,7 +257,7 @@
     font-family: 'Lato', sans-serif;
     font-size: 2em;
     font-weight: bold;
-    color: #1a237e;
+    color: var(--primary-color, #1a237e);
   }
 
   .label {
@@ -234,7 +265,7 @@
     font-size: 0.8em;
     text-transform: uppercase;
     margin-top: 5px;
-    color: #5c6bc0;
+    color: var(--secondary-color, #5c6bc0);
   }
 
   .info-text {
@@ -258,5 +289,14 @@
     .label {
       font-size: 0.7em;
     }
+  }
+
+  :global(.dark-mode) {
+    --background-color: #121212;
+    --text-color: #ffffff;
+    --primary-color: #bb86fc;
+    --secondary-color: #03dac6;
+    --time-unit-bg: #1f1f1f;
+    --spinner-color: #333333;
   }
 </style>

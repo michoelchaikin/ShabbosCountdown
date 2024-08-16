@@ -68,16 +68,16 @@
       return;
     }
 
-    // Find the next Friday that's not today or tomorrow (to avoid Shabbos)
-    let nextFriday = today;
-    while (nextFriday.DayOfWeek !== 6 || nextFriday.getDate().getTime() === today.getDate().getTime() || nextFriday.getDate().getTime() === today.addDays(1).getDate().getTime()) {
-      nextFriday = nextFriday.addDays(1);
+    // Find the upcoming Friday (including today if it's Friday)
+    let upcomingFriday = today;
+    while (upcomingFriday.DayOfWeek !== 6) {
+      upcomingFriday = upcomingFriday.addDays(1);
     }
 
-    nextSedra = nextFriday.getSedra(true).toString();
+    nextSedra = upcomingFriday.getSedra(true).toString();
 
-    // Get the candle lighting time for the next Friday
-    const candleLightingTime = nextFriday.getCandleLighting(locationObj);
+    // Get the candle lighting time for the upcoming Friday
+    const candleLightingTime = upcomingFriday.getCandleLighting(locationObj);
     
     if (candleLightingTime) {
       const timeString = Utils.getTimeString(candleLightingTime);
@@ -86,7 +86,7 @@
       candleLighting = `${formattedHours}:${minutes.toString().padStart(2, '0')} PM`;
 
       // Set up the candle lighting date for the countdown
-      const gregorianDate = nextFriday.getDate();
+      const gregorianDate = upcomingFriday.getDate();
       const [time, period] = candleLighting.split(' ');
       let [candleHours, candleMinutes] = time.split(':').map(Number);
       if (period === 'PM' && candleHours !== 12) candleHours += 12;
@@ -109,13 +109,9 @@
         clearInterval(countdownInterval); // Clean up on component unmount
       };
     } else {
-      // Handle case when candle lighting time is not available
+      console.error("Failed to get candle lighting time");
       candleLighting = "Not available";
-      timeRemaining = "It's Shabbos!";
-      days = 0;
-      hours = 0;
-      minutes = 0;
-      seconds = 0;
+      timeRemaining = "Countdown not available";
       isLoading = false;
     }
 

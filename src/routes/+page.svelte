@@ -111,7 +111,11 @@
     } else {
       // Handle case when candle lighting time is not available
       candleLighting = "Not available";
-      timeRemaining = "Countdown not available";
+      timeRemaining = "It's Shabbos!";
+      days = 0;
+      hours = 0;
+      minutes = 0;
+      seconds = 0;
       isLoading = false;
     }
 
@@ -148,14 +152,18 @@
       </div>
     </div>
     <div class="countdown">
-      {#each [{value: days, label: 'Days'}, {value: hours, label: 'Hours'}, {value: minutes, label: 'Minutes'}, {value: seconds, label: 'Seconds'}] as unit}
-        {#if unit.value > 0 || (unit.label !== 'Days' && unit.label !== 'Hours')}
-          <div class="time-unit">
-            <span class="number">{unit.value}</span>
-            <span class="label">{unit.label}</span>
-          </div>
-        {/if}
-      {/each}
+      {#if timeRemaining === "It's Shabbos!"}
+        <div class="shabbos-message">{timeRemaining}</div>
+      {:else}
+        {#each [{value: days, label: 'Days'}, {value: hours, label: 'Hours'}, {value: minutes, label: 'Minutes'}, {value: seconds, label: 'Seconds'}] as unit}
+          {#if unit.value > 0 || (unit.label !== 'Days' && unit.label !== 'Hours')}
+            <div class="time-unit">
+              <span class="number">{unit.value}</span>
+              <span class="label">{unit.label}</span>
+            </div>
+          {/if}
+        {/each}
+      {/if}
     </div>
     </div>
   {/if}
@@ -307,6 +315,18 @@
     .label {
       font-size: 0.7em;
     }
+  }
+
+  .shabbos-message {
+    font-family: 'Lato', sans-serif;
+    font-size: 2em;
+    font-weight: bold;
+    color: var(--primary-color, #1a237e);
+    text-align: center;
+    padding: 20px;
+    background-color: var(--time-unit-bg, #f0f4f8);
+    border-radius: 15px;
+    width: 100%;
   }
 
   :global(.dark-mode) {

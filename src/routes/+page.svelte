@@ -42,11 +42,11 @@
       }
     }
 
-    const totalHours = Math.floor(difference / (1000 * 60 * 60));
-    days = Math.floor(totalHours / 24);
-    hours = totalHours % 24;
-    minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-    seconds = Math.floor((difference % (1000 * 60)) / 1000);
+    const totalSeconds = Math.floor(difference / 1000);
+    days = Math.floor(totalSeconds / (24 * 60 * 60));
+    hours = Math.floor((totalSeconds % (24 * 60 * 60)) / (60 * 60));
+    minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
+    seconds = totalSeconds % 60;
   }
 
   onMount(async () => {

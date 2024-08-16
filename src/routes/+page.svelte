@@ -43,9 +43,9 @@
     }
 
     const totalSeconds = Math.floor(difference / 1000);
-    days = Math.floor(totalSeconds / (24 * 60 * 60));
-    hours = Math.floor((totalSeconds % (24 * 60 * 60)) / (60 * 60));
-    minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
+    days = 0; // Always set days to 0 as we're calculating for the current week
+    hours = Math.floor(totalSeconds / 3600);
+    minutes = Math.floor((totalSeconds % 3600) / 60);
     seconds = totalSeconds % 60;
   }
 

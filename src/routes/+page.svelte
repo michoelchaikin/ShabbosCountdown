@@ -134,7 +134,7 @@
     </div>
     <div class="countdown">
       {#each [{value: days, label: 'Days'}, {value: hours, label: 'Hours'}, {value: minutes, label: 'Minutes'}, {value: seconds, label: 'Seconds'}] as unit}
-        {#if unit.label !== 'Days' || unit.value > 0}
+        {#if unit.value > 0 || (unit.label !== 'Days' && unit.label !== 'Hours')}
           <div class="time-unit">
             <span class="number">{unit.value}</span>
             <span class="label">{unit.label}</span>

@@ -68,16 +68,16 @@
       return;
     }
 
-    // Find the next Friday including today
-    let nextFriday = today;
-    while (nextFriday.DayOfWeek !== 6) {
-      nextFriday = nextFriday.addDays(1);
+    // Find this week's Friday (if today is Saturday, get next Friday)
+    let thisFriday = today;
+    while (thisFriday.DayOfWeek !== 6 || (today.DayOfWeek === 7 && thisFriday.getDate().getTime() === today.getDate().getTime())) {
+      thisFriday = thisFriday.addDays(1);
     }
 
-    nextSedra = nextFriday.getSedra(true).toString();
+    nextSedra = thisFriday.getSedra(true).toString();
 
-    // Get the candle lighting time for the upcoming Friday
-    const candleLightingTime = nextFriday.getCandleLighting(locationObj);
+    // Get the candle lighting time for this Friday
+    const candleLightingTime = thisFriday.getCandleLighting(locationObj);
     
     if (candleLightingTime) {
       const timeString = Utils.getTimeString(candleLightingTime);

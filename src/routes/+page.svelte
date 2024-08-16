@@ -68,16 +68,16 @@
       return;
     }
 
-    // Find this week's Friday (if today is Saturday, get next Friday)
-    let thisFriday = today;
-    while (thisFriday.DayOfWeek !== 6 || (today.DayOfWeek === 7 && thisFriday.getDate().getTime() === today.getDate().getTime())) {
-      thisFriday = thisFriday.addDays(1);
+    // Find the next Friday that's not today or tomorrow (to avoid Shabbos)
+    let nextFriday = today;
+    while (nextFriday.DayOfWeek !== 6 || nextFriday.getDate().getTime() === today.getDate().getTime() || nextFriday.getDate().getTime() === today.addDays(1).getDate().getTime()) {
+      nextFriday = nextFriday.addDays(1);
     }
 
-    nextSedra = thisFriday.getSedra(true).toString();
+    nextSedra = nextFriday.getSedra(true).toString();
 
-    // Get the candle lighting time for this Friday
-    const candleLightingTime = thisFriday.getCandleLighting(locationObj);
+    // Get the candle lighting time for the next Friday
+    const candleLightingTime = nextFriday.getCandleLighting(locationObj);
     
     if (candleLightingTime) {
       const timeString = Utils.getTimeString(candleLightingTime);
@@ -101,6 +101,10 @@
       updateCountdown(); // Initial call
       const countdownInterval = setInterval(updateCountdown, 1000);
 
+      // Simulate a short delay to show the loading animation
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      isLoading = false;
+
       return () => {
         clearInterval(countdownInterval); // Clean up on component unmount
       };
@@ -108,15 +112,8 @@
       // Handle case when candle lighting time is not available
       candleLighting = "Not available";
       timeRemaining = "Countdown not available";
+      isLoading = false;
     }
-
-    // Set up countdown timer
-    const updateCountdown = () => {
-      calculateTimeRemaining(candleLightingDate);
-    };
-
-    updateCountdown(); // Initial call
-    const countdownInterval = setInterval(updateCountdown, 1000);
 
     // Simulate a short delay to show the loading animation
     await new Promise(resolve => setTimeout(resolve, 1000));

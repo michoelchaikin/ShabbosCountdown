@@ -68,9 +68,9 @@
       return;
     }
 
-    // Find the next Friday that's not today
+    // Find the next Friday including today
     let nextFriday = today;
-    while (nextFriday.DayOfWeek !== 6 || nextFriday.getDate().getTime() === today.getDate().getTime()) {
+    while (nextFriday.DayOfWeek !== 6) {
       nextFriday = nextFriday.addDays(1);
     }
 

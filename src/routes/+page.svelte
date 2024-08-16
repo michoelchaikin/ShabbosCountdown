@@ -68,17 +68,16 @@
       return;
     }
 
-    // Find the next Friday
+    // Find the next Friday or use today if it's Friday
     let nextFriday = today;
-    while (nextFriday.DayOfWeek !== 6) {
-      nextFriday = nextFriday.addDays(1);
+    if (nextFriday.DayOfWeek !== 6) {
+      while (nextFriday.DayOfWeek !== 6) {
+        nextFriday = nextFriday.addDays(1);
+      }
     }
 
-    // Get the day before (Thursday) for candle lighting
-    const thursdayBeforeShabbos = nextFriday.addDays(-1);
-
     nextSedra = nextFriday.getSedra(true).toString();
-    const candleLightingTime = thursdayBeforeShabbos.getCandleLighting(locationObj);
+    const candleLightingTime = nextFriday.getCandleLighting(locationObj);
     const timeString = Utils.getTimeString(candleLightingTime);
     let [hours, minutes] = timeString.split(':').map(Number);
     const formattedHours = (hours % 12 || 12).toString();

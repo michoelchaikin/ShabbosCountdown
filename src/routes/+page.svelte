@@ -172,9 +172,9 @@
 
   .info {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     margin-bottom: 20px;
-    flex-wrap: wrap;
+    width: 100%;
   }
 
   .info-item {
@@ -183,6 +183,7 @@
     align-items: center;
     padding: 10px;
     transition: transform 0.3s ease;
+    flex: 1;
   }
 
   .info-item:hover {
@@ -194,27 +195,27 @@
     color: var(--primary-color, #1a237e);
     text-align: center;
     margin-top: 10px;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.9em;
+    word-break: break-word;
   }
 
   .countdown {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    padding-bottom: 10px;
+    width: 100%;
   }
 
   .time-unit {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 15px;
+    padding: 10px;
     background-color: var(--time-unit-bg, #f0f4f8);
     border-radius: 15px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     flex: 1;
-    min-width: 70px;
     margin: 0 5px;
   }
 
@@ -225,39 +226,30 @@
 
   .number {
     font-family: 'Lato', sans-serif;
-    font-size: 2em;
+    font-size: 1.5em;
     font-weight: bold;
     color: var(--primary-color, #1a237e);
   }
 
   .label {
     font-family: 'Lato', sans-serif;
-    font-size: 0.8em;
+    font-size: 0.7em;
     text-transform: uppercase;
     margin-top: 5px;
     color: var(--secondary-color, #5c6bc0);
   }
 
-  .info-text {
-    font-family: 'Lato', sans-serif;
-  }
-
-  @media (max-width: 480px) {
-    .info-item {
-      padding: 10px;
-    }
-
-    .time-unit {
-      padding: 10px;
-      min-width: 60px;
+  @media (max-width: 600px) {
+    .info-text {
+      font-size: 0.8em;
     }
 
     .number {
-      font-size: 1.6em;
+      font-size: 1.2em;
     }
 
     .label {
-      font-size: 0.7em;
+      font-size: 0.6em;
     }
   }
 

@@ -81,8 +81,20 @@
     nextSedra = friday.getSedra(true).toString();
 
     // Get the candle lighting time for the upcoming Friday
-    const candleLightingTime = friday.getCandleLighting(locationObj);
-    
+    let candleLightingTime;
+    let attempts = 0;
+    const maxAttempts = 3;
+
+    while (!candleLightingTime && attempts < maxAttempts) {
+      try {
+        candleLightingTime = friday.getCandleLighting(locationObj);
+      } catch (error) {
+        console.error(`Attempt ${attempts + 1} failed:`, error);
+        friday = friday.addDays(7); // Move to next Friday
+        attempts++;
+      }
+    }
+
     if (candleLightingTime) {
       const timeString = Utils.getTimeString(candleLightingTime);
       let [hours, minutes] = timeString.split(':').map(Number);
@@ -118,7 +130,7 @@
         clearInterval(countdownInterval); // Clean up on component unmount
       };
     } else {
-      console.error("Failed to get candle lighting time");
+      console.error("Failed to get candle lighting time after multiple attempts");
       candleLighting = "Not available";
       timeRemaining = "Countdown not available";
       isLoading = false;

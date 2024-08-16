@@ -68,15 +68,19 @@
       return;
     }
 
-    // Find the most recent Friday (including today if it's Friday)
+    // Find the upcoming Friday (or today if it's Friday)
     let friday = today;
-    while (friday.DayOfWeek !== 6) {
-      friday = friday.addDays(-1);
+    if (friday.DayOfWeek === 7) {  // If it's Shabbos, move to next Friday
+      friday = friday.addDays(6);
+    } else {
+      while (friday.DayOfWeek !== 6) {
+        friday = friday.addDays(1);
+      }
     }
 
     nextSedra = friday.getSedra(true).toString();
 
-    // Get the candle lighting time for Friday
+    // Get the candle lighting time for the upcoming Friday
     const candleLightingTime = friday.getCandleLighting(locationObj);
     
     if (candleLightingTime) {
@@ -86,7 +90,7 @@
       candleLighting = `${formattedHours}:${minutes.toString().padStart(2, '0')} PM`;
 
       // Set up the candle lighting date for the countdown
-      const gregorianDate = upcomingFriday.getDate();
+      const gregorianDate = friday.getDate();
       const [time, period] = candleLighting.split(' ');
       let [candleHours, candleMinutes] = time.split(':').map(Number);
       if (period === 'PM' && candleHours !== 12) candleHours += 12;
@@ -96,17 +100,11 @@
       // Set up countdown timer
       const updateCountdown = () => {
         const now = new Date();
-        if (now > candleLightingDate && now.getDay() === 6) {
-          // It's already Shabbos
-          timeRemaining = "It's Shabbos!";
-          clearInterval(countdownInterval);
-        } else if (now > candleLightingDate) {
-          // It's past the candle lighting time but not Shabbos, recalculate for next week
+        if (now > candleLightingDate) {
+          // It's past the candle lighting time, recalculate for next week
           candleLightingDate.setDate(candleLightingDate.getDate() + 7);
-          calculateTimeRemaining(candleLightingDate);
-        } else {
-          calculateTimeRemaining(candleLightingDate);
         }
+        calculateTimeRemaining(candleLightingDate);
       };
 
       updateCountdown(); // Initial call

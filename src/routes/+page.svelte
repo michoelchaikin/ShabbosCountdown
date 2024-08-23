@@ -229,7 +229,7 @@
 
   .number {
     font-family: 'Lato', sans-serif;
-    font-size: 1.5em;
+    font-size: 2em;
     font-weight: bold;
     color: var(--primary-color, #1a237e);
     min-width: 1.5em;
@@ -238,7 +238,7 @@
 
   .label {
     font-family: 'Lato', sans-serif;
-    font-size: 0.7em;
+    font-size: 0.9em;
     text-transform: uppercase;
     margin-top: 5px;
     color: var(--secondary-color, #5c6bc0);
@@ -251,11 +251,11 @@
     }
 
     .number {
-      font-size: 1.2em;
+      font-size: 1.6em;
     }
 
     .label {
-      font-size: 0.6em;
+      font-size: 0.8em;
     }
   }
 
@@ -265,11 +265,11 @@
     }
 
     .number {
-      font-size: 1em;
+      font-size: 1.4em;
     }
 
     .label {
-      font-size: 0.5em;
+      font-size: 0.7em;
     }
   }
 

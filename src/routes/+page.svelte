@@ -212,10 +212,11 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 10px 5px;
+    padding: 15px 5px;
     background-color: var(--time-unit-bg, #f0f4f8);
     border-radius: 15px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-height: 80px;
     flex: 1;
     min-width: 0;
     margin: 0 2px;
